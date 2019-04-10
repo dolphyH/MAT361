@@ -15,7 +15,7 @@ from multinv import multinv
 # p_r - the receiver's ElGamal key p
 def request(a, m_s, N_s, prime1, prime2, e_s, r_r, p_r):
 	A = modexp(r_r, a, p_r)
-	d = multinv(e_s, prime1 * prime2)
+	d = multinv(e_s, (prime1 - 1) * (prime2 - 1))
 	signature = modexp(m_s, d, N_s)
 
 	print("[A, Ns, es, ms^ds] =")
@@ -50,9 +50,9 @@ def elGamalEncrypt(A, b, r_s, p_s, message):
 	B = modexp(r_s, b, p_s)
 	encrypted = modexp(message * modexp(A, b, p_s), 1, p_s)
 
-	print("[B encypted]")
-	print([B encrypted])
-	return ([B encrypted])
+	print("[B, encrypted]")
+	print([B, encrypted])
+	return ([B, encrypted])
 
 
 # This function is for decrypting message.
@@ -75,7 +75,7 @@ def elGamalDecrypt(B, a, p_s, encrypted):
 def sendRequest():
 	print("Send A, Ns, es, ms^ds to request other's N and e.")
 	a = int(input("Decide a secret a: "))
-	m = int(input("Your team ID: "))
+	m = int(input("Your team m: "))
 	N = int(input("Your RSA modulus N = p * q: "))
 	p1 = int(input("Enter p: "))
 	p2 = int(input("Enter q: "))
